@@ -6,14 +6,40 @@ import models, schemas, crud
 from database import engine, SessionLocal
 import pandas as pd
 import io
+import os
+from pathlib import Path
 
 # Create all database tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="PySQL Gym 🧠", description="Learn Python and SQL through interactive quizzes!")
 
-# Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Get the current directory and static path for Windows compatibility
+current_dir = Path(__file__).parent
+static_dir = current_dir / "static"
+
+# Mount static files with absolute path for Windows compatibility
+app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+
+# Add a debug endpoint to check static files
+@app.get("/debug/static-files")
+def debug_static_files():
+    """Debug endpoint to check static files"""
+    static_files = []
+    if static_dir.exists():
+        for file in static_dir.iterdir():
+            if file.is_file():
+                static_files.append({
+                    "name": file.name,
+                    "path": str(file),
+                    "size": file.stat().st_size
+                })
+    return {
+        "static_directory": str(static_dir),
+        "static_directory_exists": static_dir.exists(),
+        "current_directory": str(current_dir),
+        "files": static_files
+    }
 
 # Dependency for DB session
 def get_db():
@@ -27,7 +53,15 @@ def get_db():
 # 🏠 Home route - serve the frontend
 @app.get("/")
 def read_root():
-    return FileResponse("static/index.html")
+    index_path = static_dir / "index.html"
+    return FileResponse(
+        str(index_path),
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
+    )
 
 
 # 🧱 TOPIC ENDPOINTS

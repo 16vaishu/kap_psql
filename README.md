@@ -16,7 +16,7 @@ An interactive web application for learning Python and SQL through engaging quiz
 ### Prerequisites
 
 - Python 3.8+
-- PostgreSQL database
+- PostgreSQL database (or SQLite for local development)
 - pip (Python package manager)
 
 ### Installation
@@ -44,13 +44,37 @@ An interactive web application for learning Python and SQL through engaging quiz
    ```
 
 4. **Run the application**
+   
+   **Linux/macOS:**
    ```bash
+   python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   
+   **Windows:**
+   ```cmd
+   # Option 1: Use the Windows launcher (recommended)
+   start_windows.bat
+   
+   # Option 2: Manual command
    python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
    ```
 
 5. **Access the application**
    
    Open your browser and navigate to: `http://localhost:8000`
+
+### 🪟 Windows Users
+
+For Windows users, we provide additional tools and troubleshooting:
+
+- **Easy Launcher:** Double-click `start_windows.bat` to start the application
+- **Troubleshooting:** See [WINDOWS_TROUBLESHOOTING.md](WINDOWS_TROUBLESHOOTING.md) for common issues
+- **Debug Endpoint:** Visit `http://localhost:8000/debug/static-files` to check static file loading
+
+**Common Windows Issues:**
+- **Static files not loading:** Clear browser cache or use incognito mode
+- **Database connection errors:** Use local PostgreSQL or SQLite (see troubleshooting guide)
+- **Port conflicts:** The launcher will help you identify and resolve port issues
 
 ## 🐳 Docker Deployment
 
