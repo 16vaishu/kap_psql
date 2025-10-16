@@ -1,216 +1,233 @@
 # 🧠 PySQL Gym
 
-A modern web application for learning Python and SQL through interactive quizzes!
+An interactive web application for learning Python and SQL through engaging quizzes! Built with FastAPI, PostgreSQL, and vanilla JavaScript.
 
-## 🎯 What is PySQL Gym?
+## ✨ Features
 
-PySQL Gym is an educational web application that helps people learn Python and SQL programming through engaging multiple-choice quizzes. Think of it as your personal coding gym where you can exercise your programming knowledge!
-
-### Features
-
-- 📚 **Topic-based Learning**: Organized quizzes by topics (Python Basics, SQL Fundamentals, etc.)
-- 🎮 **Interactive Quizzes**: Multiple-choice questions with instant feedback
-- 📊 **Progress Tracking**: See your scores and review incorrect answers
-- 🎨 **Modern UI**: Beautiful, responsive design that works on all devices
-- 🚀 **Fast & Reliable**: Built with FastAPI for high performance
-
-## 🏗️ Architecture
-
-This project demonstrates a full-stack web application architecture:
-
-- **Backend**: FastAPI (Python) - REST API server
-- **Database**: PostgreSQL - Data storage
-- **Frontend**: HTML, CSS, JavaScript - User interface
-- **Containerization**: Docker - Easy deployment
-- **Cloud Ready**: Designed for Google Cloud Run deployment
-
-## 🛠️ Technology Stack
-
-- **Python** - Backend programming language
-- **FastAPI** - Modern web framework for building APIs
-- **SQLAlchemy** - Database ORM (Object-Relational Mapping)
-- **PostgreSQL** - Relational database
-- **HTML/CSS/JavaScript** - Frontend technologies
-- **Docker** - Containerization
-- **Pydantic** - Data validation
-
-## 📋 Prerequisites
-
-Before running this application, make sure you have:
-
-- Python 3.11 or higher
-- PostgreSQL database
-- Docker (optional, for containerized deployment)
+- **Interactive Quizzes**: Practice Python and SQL with multiple-choice questions
+- **Topic-based Learning**: Organized quizzes by programming topics
+- **Excel Upload**: Bulk upload quiz questions using Excel templates
+- **Real-time Scoring**: Instant feedback and detailed results
+- **User Progress Tracking**: Track quiz submissions and performance
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
 ## 🚀 Quick Start
 
-### Option 1: Easy Startup (Recommended)
+### Prerequisites
 
-The easiest way to get started is using our startup script that automatically detects your system and chooses the best deployment method:
+- Python 3.8+
+- PostgreSQL database
+- pip (Python package manager)
 
-**For Linux/macOS:**
-```bash
-# Navigate to the project directory
-cd pysql_gym-main
+### Installation
 
-# Run the startup script
-python start.py
-# or
-./start.py
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/16vaishu/kap_psql.git
+   cd kap_psql
+   ```
 
-**For Windows:**
-```cmd
-# Navigate to the project directory
-cd pysql_gym-main
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Double-click start.bat or run in command prompt
-start.bat
-```
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   POSTGRES_USER=your_username
+   POSTGRES_PASSWORD=your_password
+   POSTGRES_HOST=your_host
+   POSTGRES_PORT=5432
+   POSTGRES_DB=your_database_name
+   ```
 
-The startup script will:
-- Check your system requirements
-- Detect if Docker is available
-- Check for PostgreSQL installation
-- Guide you through the setup process
-- Start the application automatically
+4. **Run the application**
+   ```bash
+   python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
 
-### Option 2: Manual Setup
-
-If you prefer manual setup:
-
-#### With Docker (Includes Database)
-```bash
-# Update password in docker-compose.yml first
-docker-compose up --build
-```
-Access at: `http://localhost:8080`
-
-#### Without Docker (Requires PostgreSQL)
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Update .env with your database credentials
-# Start PostgreSQL and create 'pysql_gym' database
-
-# Run the application
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-Access at: `http://localhost:8000`
-
-### Initialize Sample Data
-
-Once the application is running:
-1. Open your browser and go to the application URL
-2. Click "Initialize Sample Data" to load sample topics and quizzes
-3. Start learning!
+5. **Access the application**
+   
+   Open your browser and navigate to: `http://localhost:8000`
 
 ## 🐳 Docker Deployment
 
-### Build and Run with Docker
+### Using Docker Compose
 
-```bash
-# Build the Docker image
-docker build -t pysql-gym .
+1. **Build and run with Docker Compose**
+   ```bash
+   docker-compose up --build
+   ```
 
-# Run the container
-docker run -p 8080:8080 pysql-gym
-```
+2. **Access the application**
+   
+   The app will be available at: `http://localhost:8000`
 
-Access the application at: `http://localhost:8080`
+### Manual Docker Build
 
-## 📁 Project Structure
+1. **Build the Docker image**
+   ```bash
+   docker build -t pysql-gym .
+   ```
 
-```
-pysql_gym-main/
-├── main.py              # FastAPI application and API endpoints
-├── models.py            # Database models (SQLAlchemy)
-├── schemas.py           # Pydantic schemas for data validation
-├── crud.py              # Database operations
-├── database.py          # Database configuration
-├── requirements.txt     # Python dependencies
-├── Dockerfile          # Docker configuration
-├── .env                # Environment variables
-├── static/             # Frontend files
-│   ├── index.html      # Main HTML page
-│   ├── style.css       # Styling
-│   └── script.js       # JavaScript functionality
-└── README.md           # This file
-```
+2. **Run the container**
+   ```bash
+   docker run -p 8000:8000 --env-file .env pysql-gym
+   ```
+
+## 📊 Usage
+
+### Getting Started
+
+1. **Initialize Sample Data**: Click the "Initialize Sample Data" button to populate the database with example topics and quizzes
+2. **Choose a Topic**: Select from available programming topics (Python Basics, SQL Fundamentals, etc.)
+3. **Take a Quiz**: Answer multiple-choice questions and get instant feedback
+4. **View Results**: See your score and review correct answers
+
+### Admin Features
+
+#### Bulk Quiz Upload
+
+1. **Download Template**: Get the Excel template with the correct format
+2. **Fill Template**: Add your quiz questions following the template structure:
+   - Column A: Question
+   - Column B-E: Multiple choice options
+   - Column F: Correct Answer
+   - Column G: Topic ID (optional)
+3. **Upload File**: Select topic and upload your Excel file
+4. **Review Results**: Check upload status and any errors
+
+#### Excel Template Format
+
+| Question | Choice 1 | Choice 2 | Choice 3 | Choice 4 | Correct Answer | Topic ID |
+|----------|----------|----------|----------|----------|----------------|----------|
+| What is Python? | A programming language | A snake | A movie | A book | A programming language | 1 |
+
+## 🏗️ Architecture
+
+### Backend (FastAPI)
+
+- **main.py**: Application entry point and API routes
+- **models.py**: SQLAlchemy database models
+- **schemas.py**: Pydantic data validation schemas
+- **crud.py**: Database operations
+- **database.py**: Database connection and configuration
+
+### Frontend (Vanilla JavaScript)
+
+- **index.html**: Main application interface
+- **script.js**: Interactive functionality and API calls
+- **style.css**: Responsive styling and animations
+
+### Database Schema
+
+#### Topics Table
+- `id`: Primary key
+- `title`: Topic name
+- `description`: Topic description
+
+#### Quizzes Table
+- `id`: Primary key
+- `topic_id`: Foreign key to topics
+- `question`: Quiz question text
+- `choices`: JSON array of answer choices
+- `correct_answer`: The correct answer
+
+#### Submissions Table
+- `id`: Primary key
+- `quiz_id`: Foreign key to quizzes
+- `user_name`: Name of the quiz taker
+- `selected`: User's selected answer
+- `is_correct`: Boolean indicating if answer was correct
+- `score`: Numeric score (1 for correct, 0 for incorrect)
 
 ## 🔧 API Endpoints
 
 ### Topics
-- `GET /api/topics/` - Get all topics
-- `POST /api/topics/` - Create a new topic
-- `GET /api/topics/{topic_id}` - Get a specific topic
+- `GET /api/topics/`: List all topics
+- `POST /api/topics/`: Create a new topic
+- `GET /api/topics/{topic_id}`: Get specific topic
 
 ### Quizzes
-- `POST /api/quizzes/` - Create a new quiz
-- `GET /api/quizzes/topic/{topic_id}` - Get quizzes for a topic
-- `GET /api/quizzes/{quiz_id}` - Get a specific quiz
+- `GET /api/quizzes/topic/{topic_id}`: Get quizzes for a topic
+- `POST /api/quizzes/`: Create a new quiz
+- `GET /api/quizzes/{quiz_id}`: Get specific quiz
 
 ### Submissions
-- `POST /api/submissions/` - Submit a quiz answer
-- `GET /api/submissions/` - Get all submissions
+- `POST /api/submissions/`: Submit a quiz answer
+- `GET /api/submissions/`: List all submissions
 
-### Utilities
-- `POST /api/init-data/` - Initialize sample data
+### Admin
+- `POST /api/init-data/`: Initialize sample data
+- `POST /api/upload-quizzes/`: Bulk upload quizzes from Excel
+- `GET /api/download-template/`: Download Excel template
 
-## 🎮 How to Use
+## 🛠️ Development
 
-1. **Start**: Open the application in your browser
-2. **Initialize**: Click "Initialize Sample Data" to load sample quizzes
-3. **Choose Topic**: Select a topic you want to practice
-4. **Enter Name**: Provide your name to track your progress
-5. **Take Quiz**: Answer the multiple-choice questions
-6. **Review**: See your results and review incorrect answers
-7. **Repeat**: Try again or choose a different topic
+### Project Structure
 
-## 🌟 Learning Objectives
+```
+pysql_gym/
+├── main.py              # FastAPI application
+├── models.py            # Database models
+├── schemas.py           # Pydantic schemas
+├── crud.py              # Database operations
+├── database.py          # Database configuration
+├── requirements.txt     # Python dependencies
+├── Dockerfile           # Docker configuration
+├── docker-compose.yml   # Docker Compose setup
+├── .env                 # Environment variables (create this)
+├── static/              # Frontend files
+│   ├── index.html       # Main HTML file
+│   ├── script.js        # JavaScript functionality
+│   └── style.css        # Styling
+└── README.md            # This file
+```
 
-By building and using this application, you'll learn:
+### Adding New Features
 
-- **Backend Development**: FastAPI, REST APIs, database design
-- **Frontend Development**: HTML, CSS, JavaScript, responsive design
-- **Database Management**: PostgreSQL, SQLAlchemy ORM
-- **DevOps**: Docker containerization, environment configuration
-- **Full-Stack Integration**: How frontend and backend communicate
+1. **Database Changes**: Update `models.py` and create migrations
+2. **API Endpoints**: Add routes in `main.py`
+3. **Data Validation**: Update `schemas.py`
+4. **Database Operations**: Add functions to `crud.py`
+5. **Frontend**: Update HTML, CSS, and JavaScript files
 
-## 🚀 Deployment to Google Cloud Run
+### Running Tests
 
-This application is designed to be easily deployed to Google Cloud Run:
-
-1. Build and push Docker image to Google Container Registry
-2. Deploy to Cloud Run with environment variables
-3. Connect to Cloud SQL PostgreSQL instance
+```bash
+python test_app.py
+```
 
 ## 🤝 Contributing
 
-Feel free to contribute to this project by:
-
-- Adding new quiz topics
-- Improving the UI/UX
-- Adding new features
-- Fixing bugs
-- Writing tests
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📝 License
 
-This project is open source and available under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🎓 Educational Value
+## 🙏 Acknowledgments
 
-This project serves as an excellent learning resource for:
+- Built with [FastAPI](https://fastapi.tiangolo.com/) for the backend API
+- [PostgreSQL](https://www.postgresql.org/) for reliable data storage
+- [SQLAlchemy](https://www.sqlalchemy.org/) for database ORM
+- [Pandas](https://pandas.pydata.org/) for Excel file processing
+- Vanilla JavaScript for lightweight frontend interactions
 
-- **Beginners**: Learn web development concepts
-- **Students**: Understand full-stack architecture
-- **Developers**: Practice modern web technologies
-- **Educators**: Use as a teaching tool
+## 📞 Support
+
+If you encounter any issues or have questions:
+
+1. Check the [Issues](https://github.com/16vaishu/kap_psql/issues) page
+2. Create a new issue with detailed information
+3. Contact the maintainers
 
 ---
 
-**Happy Learning! 🚀**
-
-Built with ❤️ using FastAPI, PostgreSQL, and modern web technologies.
+**Happy Learning! 🎓**
